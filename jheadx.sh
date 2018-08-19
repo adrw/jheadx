@@ -80,6 +80,10 @@ function restore_timestamps {
   echo "func: restore timestamps"
 
   exit 0
+  # Check if file exists in other directory
+  for file in * ; do [ -f ../images/$file ] && echo $file ; done
+
+  exit 0
 }
 
 CMD_X=false
