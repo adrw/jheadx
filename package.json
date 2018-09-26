@@ -5,7 +5,14 @@
   "main": "jheadx.js",
   "repository": "git@github.com:adrw/jheadx.git",
   "author": "Andrew Paradi <account+npmjs@adrw.ch>",
+  "bin": {
+    "jheadx": "jheadx.js"
+  },
+  "engines": {
+    "node": ">= 0.2.0"
+  },
   "dependencies": {
     "dayjs": "^1.7.7"
-  }
+  },
+  "preferGlobal": true
 }
