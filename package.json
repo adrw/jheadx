@@ -1,0 +1,11 @@
+{
+  "name": "jheadx",
+  "version": "0.0.1",
+  "description": "`jhead` wrapper with extended functionality to batch fix photos lacking EXIF data",
+  "main": "jheadx.js",
+  "repository": "git@github.com:adrw/jheadx.git",
+  "author": "Andrew Paradi <account+npmjs@adrw.ch>",
+  "dependencies": {
+    "dayjs": "^1.7.7"
+  }
+}
