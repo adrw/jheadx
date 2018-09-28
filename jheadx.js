@@ -5,23 +5,30 @@
 const program = require("commander")
 const dayjs = require("dayjs")
 
-program
+if (process.argv[2].startsWith("-x")) {
+  program
   .version('0.0.1', '-v, --version')
   .option('-x, --extended', 'jheadx extended option prefix')
   .option('-f, --fake', 'fake timestamps')
   .option('-r, --restore', 'restore timestamps')
   .parse(process.argv)
 
-if (program.extended) {
-  if (program.fake) {
-    console.log("fake") 
+  if (program.extended) {
+    if (program.fake) {
+      console.log("fake") 
 
-  } else if (program.restore) {
-    console.log("restore") 
+    } else if (program.restore) {
+      console.log("restore") 
+    }
+  } else {
+    console.log("$ jhead", process.argv[2])
   }
 } else {
-  console.log("$ jhead", process.argv[2])
+  console.log(process.argv)
 }
+
+
+
 
 // program
 //   .parseOptions(process.argv)
