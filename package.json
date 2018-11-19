@@ -2,18 +2,65 @@
   "name": "jheadx",
   "version": "0.0.1",
   "description": "`jhead` wrapper with extended functionality to batch fix photos lacking EXIF data",
-  "main": "jheadx.js",
+  "licence": "GPL-3.0",
+  "main": "index.js",
   "repository": "git@github.com:adrw/jheadx.git",
-  "author": "Andrew Paradi <account+npmjs@adrw.ch>",
+  "author": "adrw Andrew Alexander <account+npmjs@adrw.ch>",
   "bin": {
-    "jheadx": "jheadx.js"
+    "jheadx": "dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">= 0.2.0"
   },
   "dependencies": {
+    "chalk": "^2.4.1",
     "commander": "^2.18.0",
-    "dayjs": "^1.7.7"
+    "dayjs": "^1.7.7",
+    "inquirer": "^6.2.0",
+    "node-emoji": "^1.8.1",
+    "yargs": "^12.0.4"
   },
-  "preferGlobal": true
+  "devDependencies": {
+    "@misk/dev": "^0.0.69",
+    "@misk/tslint": "^0.0.10",
+    "@types/inquirer": "0.0.43",
+    "@types/node-emoji": "^1.8.0",
+    "@types/yargs": "^12.0.1",
+    "jest": "^23.6.0",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.30"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "start": "node dist/index.js",
+    "watch": "tsc -w",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint --ext .ts --ext .js src tests",
+    "prepublish": "yarn build",
+    "smooth-release": "smooth-release",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --config prettier.config.js --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "jsx"
+    ]
+  }
 }
