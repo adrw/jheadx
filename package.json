@@ -29,9 +29,7 @@
     "@types/inquirer": "0.0.43",
     "@types/node-emoji": "^1.8.0",
     "@types/yargs": "^12.0.1",
-    "jest": "^23.6.0",
-    "ts-node": "^7.0.1",
-    "ts-node-dev": "^1.0.0-pre.30"
+    "jest": "^23.6.0"
   },
   "preferGlobal": true,
   "scripts": {
