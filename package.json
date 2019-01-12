@@ -37,16 +37,21 @@
     "watch": "tsc -w",
     "build": "tsc",
     "test": "jest",
-    "lint": "eslint --ext .ts --ext .js src tests",
+    "lint": "prettier --write --config package.json \".{/src/**/,/}*.{md,css,sass,less,json,js,jsx,ts,tsx}\"",
     "prepublish": "yarn build",
     "smooth-release": "smooth-release",
-    "precommit": "lint-staged"
+    "precommit": "npm run-script lint"
   },
-  "lint-staged": {
-    "*.ts": [
-      "prettier --config prettier.config.js --write",
-      "git add"
-    ]
+  "prettier": {
+    "arrowParens": "avoid",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
   },
   "jest": {
     "transform": {
