@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const yargs = require("yargs");
+const utils_1 = require("../utils");
 const dayjs = require("dayjs");
 exports.command = "fake";
 exports.desc = `Fake Timestamps`;
@@ -28,7 +29,11 @@ function handler() {
             type: "string"
         }).argv;
         console.log("Fake Timestamps");
-        console.log(argv.s, argv.f);
+        const start = dayjs(argv.s);
+        const finish = dayjs(argv.f);
+        console.log("Start", start.format(utils_1.dateFormat), "Finish", finish.format(utils_1.dateFormat));
+        const difference = finish.diff(start);
+        console.log("Difference", dayjs(difference).format(utils_1.dateFormat));
     });
 }
 exports.handler = handler;

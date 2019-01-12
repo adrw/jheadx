@@ -8,6 +8,7 @@ exports.log = console.log;
 exports.logError = (s) => exports.log(emoji.emojify(chalk_1.default.bold.red(s)));
 exports.logInfo = (s) => exports.log(emoji.emojify(chalk_1.default.bold(s)));
 exports.logDetail = (s) => exports.log(emoji.emojify(chalk_1.default.dim(s)));
+exports.dateFormat = "YYYY-MM-DD HH:mm:ss:SSS";
 exports.jheadCmdFromArgs = () => {
     let args = process.argv;
     args.splice(0, 1);

@@ -1,4 +1,5 @@
 import * as yargs from "yargs"
+import { dateFormat } from "../utils"
 const dayjs = require("dayjs")
 
 export const command = "fake"
@@ -20,5 +21,16 @@ export async function handler() {
     }).argv
 
   console.log("Fake Timestamps")
-  console.log(argv.s, argv.f)
+  const start = dayjs(argv.s)
+  const finish = dayjs(argv.f)
+
+  console.log(
+    "Start",
+    start.format(dateFormat),
+    "Finish",
+    finish.format(dateFormat)
+  )
+
+  const difference = finish.diff(start)
+  console.log("Difference", dayjs(difference).format(dateFormat))
 }
