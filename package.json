@@ -13,7 +13,8 @@
     "dist"
   ],
   "engines": {
-    "node": ">= 0.2.0"
+    "node": ">= 0.2.0",
+    "yarn": "YARN NO LONGER USED - use npm instead."
   },
   "dependencies": {
     "chalk": "^2.4.1",
@@ -40,7 +41,7 @@
     "build": "tsc",
     "test": "jest",
     "lint": "prettier --write --config package.json \".{/src/**/,/}*.{md,css,sass,less,json,js,jsx,ts,tsx}\"",
-    "prepublish": "yarn build",
+    "prepublish": "npm run-script build",
     "smooth-release": "smooth-release",
     "precommit": "npm run-script lint"
   },
