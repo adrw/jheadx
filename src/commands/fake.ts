@@ -1,6 +1,5 @@
 import * as yargs from "yargs"
-import { dateFormat, logDetail, logError, logInfo, logger } from "../utils"
-import { log } from "util"
+import { dateFormat, logger } from "../utils"
 const dayjs = require("dayjs")
 
 export const command = "fake"
@@ -22,33 +21,17 @@ export async function handler() {
         type: "string"
       }).argv
 
-    console.log("Fake Timestamps")
+    const photos = 20
     const start = dayjs(argv.s)
     const finish = dayjs(argv.f)
-
-    console.log(
-      "Start",
-      start.format(dateFormat),
-      "Finish",
-      finish.format(dateFormat)
-    )
-
     const difference = finish.diff(start, "second")
-    console.log("Difference (expressed in different Units)")
-    console.log(finish.diff(start, "day"), "day")
-    console.log(finish.diff(start, "hour"), "hour")
-    console.log(finish.diff(start, "minute"), "minute")
-    console.log(finish.diff(start, "second"), "second")
+    const increment = difference / photos
+    for (let i = 0; i < photos; i++) {
+      logger.debug(dayjs(start + i * increment).format(dateFormat))
+    }
 
-    log("test")
-    logDetail("detail")
-    logError("error")
-    logInfo("Info")
-    logger.info("Winston Test")
-    logger.warn("winston warn")
-    logger.error("winston error")
-    logger.debug("winston debug")
+    logger.debug(difference)
   } catch (e) {
-    console.log("[ERROR]", e)
+    logger.error("[ERROR]", e)
   }
 }

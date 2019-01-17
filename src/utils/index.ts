@@ -1,39 +1,18 @@
-import * as emoji from "node-emoji"
-import chalk from "chalk"
 import { execSync } from "child_process"
 import yargs = require("yargs")
 import * as winston from "winston"
 
-export const log = console.log
-export const logError = (s: string) => log(emoji.emojify(chalk.bold.red(s)))
-export const logInfo = (s: string) => log(emoji.emojify(chalk.bold(s)))
-export const logDetail = (s: string) => log(emoji.emojify(chalk.dim(s)))
-
 export const dateFormat = "YYYY-MM-DD HH:mm:ss:SSS"
 
-const { colorize, combine, timestamp, label, json, printf } = winston.format
-const myFormat = printf(info => {
-  return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`
-})
+const { colorize, combine, label, printf } = winston.format
 export const logger = winston.createLogger({
-  level: "info",
+  level: "debug",
   format: combine(
     colorize(),
-    timestamp(),
     label({ label: "jheadx" }),
-    myFormat
+    printf(info => `[${info.label}][${info.level}\t] ${info.message}`)
   ),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.Console({
-      format: combine(
-        colorize(),
-        timestamp(),
-        label({ label: "jheadx" }),
-        json()
-      )
-    })
-  ]
+  transports: [new winston.transports.Console()]
 })
 
 export const jheadCmdFromArgs = () => {
@@ -46,15 +25,15 @@ export const jheadCmdFromArgs = () => {
 export const runJheadCmd = (cmd: string) => {
   try {
     const result = execSync(cmd, { stdio: "pipe", encoding: "utf-8" })
-    console.log(result)
+    logger.info(result)
   } catch (e) {
-    console.log(e.stdout)
-    console.log(e.stderr)
+    logger.info(e.stdout)
+    logger.info(e.stderr)
   }
 }
 
 export const handleFail = (): void => {
-  console.log(yargs.help().version())
+  logger.info(yargs.help().version())
   // const cmd = jheadCmdFromArgs()
   // logInfo(`Now running: $ ${cmd}`)
   // runJheadCmd(cmd)
