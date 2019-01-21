@@ -1,13 +1,35 @@
 import * as yargs from "yargs"
-import { dateFormat, logger } from "../utils"
+import { dateFormat, logger, runCommand, jheadTimeFormat } from "../utils"
 const dayjs = require("dayjs")
+import * as fs from "fs-extra"
+import * as klaw from "klaw"
 
 export const command = "fake"
 export const desc = `Fake Timestamps`
 
-export async function handler() {
+const fakeTimestamp = async () => {}
+
+const setExifTime = (newTime: number, directory: string, file: string) => {
+  return `jhead -ts${dayjs(newTime).format(
+      jheadTimeFormat
+    )} ${directory}/${file}`
+}
+
+export const handler = async () => {
   try {
     var argv = yargs
+      .option("d", {
+        alias: "directory",
+        demandOption: true,
+        describe: "start time",
+        type: "string"
+      })
+      .option("d", {
+        alias: "directory",
+        demandOption: true,
+        describe: "start time",
+        type: "string"
+      })
       .option("s", {
         alias: "start",
         demandOption: true,
@@ -21,16 +43,24 @@ export async function handler() {
         type: "string"
       }).argv
 
-    const photos = 20
+    const directory = argv.d
+    const files = await fs
+      .readdir(directory)
+      .then(files => files.filter(file => !file.endsWith("DS_Store")))
+
     const start = dayjs(argv.s)
     const finish = dayjs(argv.f)
-    const difference = finish.diff(start, "second")
-    const increment = difference / photos
-    for (let i = 0; i < photos; i++) {
-      logger.debug(dayjs(start + i * increment).format(dateFormat))
-    }
+    const difference = finish.diff(start)
+    const increment = difference / files.length
+    for (let i = 0; i < files.length; i++) {
+      logger.debug(
+        files[i] + " " + dayjs(start + i * increment).format(dateFormat)
+      )
+      if (runCommand(setExifTime(start + i * increment, directory, files[i]))) {
 
-    logger.debug(difference)
+      }
+      break
+    }
   } catch (e) {
     logger.error("[ERROR]", e)
   }

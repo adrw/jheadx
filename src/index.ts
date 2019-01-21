@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import * as yargs from "yargs"
-import { jheadCmdFromArgs, runJheadCmd, logger } from "./utils"
+import { jheadCmdFromArgs, runCommand, logger } from "./utils"
 
 yargs
   .commandDir("commands")
@@ -11,5 +11,5 @@ yargs
     logger.error(error)
     const cmd = jheadCmdFromArgs()
     logger.info(`Now running: $ ${cmd}`)
-    runJheadCmd(cmd)
+    runCommand(cmd)
   }).argv
