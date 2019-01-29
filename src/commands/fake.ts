@@ -1,5 +1,5 @@
 import * as yargs from "yargs"
-import { dateFormat, logger, runCommand, jheadTimeFormat } from "../utils"
+import { execute, jheadTimeFormat, logger } from "../utils"
 const dayjs = require("dayjs")
 import * as fs from "fs-extra"
 import * as klaw from "klaw"
@@ -7,13 +7,26 @@ import * as klaw from "klaw"
 export const command = "fake"
 export const desc = `Fake Timestamps`
 
-const fakeTimestamp = async () => {}
+const outputVerbosityControl = "-q"
 
-const setExifTime = (newTime: number, directory: string, file: string) => {
-  return `jhead -ts${dayjs(newTime).format(
-      jheadTimeFormat
-    )} ${directory}/${file}`
-}
+const dumpExifHeader = (path: string) => `jhead -exifmap ${path}`
+
+const dumpFileDateName = (path: string) =>
+  `${dumpExifHeader(path)} | sort | tail -n +3 | head -2`
+
+const dumpExifTimeFileDateName = (path: string) =>
+  `${dumpExifHeader(path)} | sort | tail -n +3 | head -3`
+
+const makeExifSection = (path: string) =>
+  `jhead ${outputVerbosityControl} -mkexif ${path}`
+
+const setExifTime = (newTime: number, path: string) =>
+  `jhead ${outputVerbosityControl} -ts${dayjs(newTime).format(
+    jheadTimeFormat
+  )} ${path}`
+
+const setFileTimeToExifTime = (path: string) =>
+  `jhead ${outputVerbosityControl} -ft ${path}`
 
 export const handler = async () => {
   try {
@@ -43,24 +56,34 @@ export const handler = async () => {
         type: "string"
       }).argv
 
+    // Initialize filesystem
     const directory = argv.d
     const files = await fs
       .readdir(directory)
       .then(files => files.filter(file => !file.endsWith("DS_Store")))
 
+    // Calculate date range and step size
     const start = dayjs(argv.s)
     const finish = dayjs(argv.f)
     const difference = finish.diff(start)
     const increment = difference / files.length
-    for (let i = 0; i < files.length; i++) {
-      logger.debug(
-        files[i] + " " + dayjs(start + i * increment).format(dateFormat)
-      )
-      if (runCommand(setExifTime(start + i * increment, directory, files[i]))) {
 
+    // Loop over files and update Exif and file timestamp to new time
+    let path = ""
+    for (let i = 0; i < files.length; i++) {
+      path = `${directory}/${files[i]}`
+      logger.debug(execute(dumpFileDateName(path)))
+      while (
+        execute(setExifTime(start + i * increment, path)).includes(
+          "contains no Exif timestamp to change"
+        )
+      ) {
+        execute(makeExifSection(path))
       }
-      break
+      execute(setFileTimeToExifTime(path))
+      logger.debug(execute(dumpExifTimeFileDateName(path)))
     }
+    logger.debug("Done. 🍺")
   } catch (e) {
     logger.error("[ERROR]", e)
   }

@@ -12,7 +12,7 @@ export const logger = winston.createLogger({
   format: combine(
     colorize(),
     label({ label: "jheadx" }),
-    printf(info => `[${info.label}][${info.level}\t] ${info.message}`)
+    printf(info => `[${info.label}][${info.level}]\n${info.message}`)
   ),
   transports: [new winston.transports.Console()]
 })
@@ -24,10 +24,9 @@ export const jheadCmdFromArgs = () => {
   return args.join(" ")
 }
 
-export const runCommand = (cmd: string) => {
+export const execute = (cmd: string) => {
   try {
     const result = execSync(cmd, { stdio: "pipe", encoding: "utf-8" })
-    logger.info(result)
     return result
   } catch (e) {
     logger.info(e.stdout)
@@ -37,7 +36,7 @@ export const runCommand = (cmd: string) => {
 
 export const handleFail = (): void => {
   logger.info(yargs.help().version())
-  // const cmd = jheadCmdFromArgs()
-  // logInfo(`Now running: $ ${cmd}`)
-  // runCommand(cmd)
+  const cmd = jheadCmdFromArgs()
+  logger.info(`Now running: $ ${cmd}`)
+  execute(cmd)
 }
