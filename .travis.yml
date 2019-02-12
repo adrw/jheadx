@@ -2,4 +2,6 @@ language: node
 
 install: npm install
 
-script: npm run-script build
+script:
+  - npm run-script build
+  - npm run-script test

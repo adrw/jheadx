@@ -2,30 +2,29 @@ import * as yargs from "yargs"
 import { execute, jheadTimeFormat, logger } from "../utils"
 const dayjs = require("dayjs")
 import * as fs from "fs-extra"
-import * as klaw from "klaw"
 
 export const command = "fake"
 export const desc = `Fake Timestamps`
 
 const outputVerbosityControl = "-q"
 
-const dumpExifHeader = (path: string) => `jhead -exifmap ${path}`
+export const dumpExifHeader = (path: string) => `jhead -exifmap ${path}`
 
-const dumpFileDateName = (path: string) =>
+export const dumpFileDateName = (path: string) =>
   `${dumpExifHeader(path)} | sort | tail -n +3 | head -2`
 
-const dumpExifTimeFileDateName = (path: string) =>
+export const dumpExifTimeFileDateName = (path: string) =>
   `${dumpExifHeader(path)} | sort | tail -n +3 | head -3`
 
-const makeExifSection = (path: string) =>
+export const makeExifSection = (path: string) =>
   `jhead ${outputVerbosityControl} -mkexif ${path}`
 
-const setExifTime = (newTime: number, path: string) =>
+export const setExifTime = (newTime: number, path: string) =>
   `jhead ${outputVerbosityControl} -ts${dayjs(newTime).format(
     jheadTimeFormat
   )} ${path}`
 
-const setFileTimeToExifTime = (path: string) =>
+export const setFileTimeToExifTime = (path: string) =>
   `jhead ${outputVerbosityControl} -ft ${path}`
 
 export const handler = async () => {
