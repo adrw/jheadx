@@ -1,6 +1,6 @@
 # jheadx
 
-[![Build Status](https://travis-ci.com/adrw/jheadx.svg?branch=master)](https://travis-ci.org/adrw/jheadx)
+[![Build Status](https://travis-ci.com/adrw/jheadx.svg?branch=master)](https://travis-ci.com/adrw/jheadx)
 
 `$ jhead` wrapper with extended functionality to batch fix photos lacking EXIF data
 
