@@ -14,6 +14,7 @@
   - **Note:** sorting is done in a simple `nodejs` sort such that the following are all valid orderings. Thus, to ensure the correct order, use the same number of digits for photo numbers (ie. pad with leading 0s).
     - `[Photo-1.png,Photo-10.png,Photo-18.png,Photo-19.png,Photo-2.png,Photo-24.png,Photo-3.png,Photo-5.png,Photo-6.png,Photo-8.png]`
     - `[photo-00001.png,photo-00002.png,photo-00005.png,photo-00008.png,photo-00009.png,photo-00010.png,photo-00014.png,photo-00016.png,photo-00023.png,photo-00027.png]`
+  - Example Usage: `$ jheadx fake -d ./img/test -s 2014-01-24-14:30 -f 2014-01-24-18:00`
 
 # Wrapper
 
