@@ -1,3 +1,4 @@
+const dayjs = require("dayjs")
 import {
   handler as fake,
   dumpExifHeader,
@@ -13,18 +14,17 @@ import * as utils from "../../src/utils"
 jest.mock("inquirer/lib/utils/screen-manager")
 jest.mock("../../src/utils")
 
-// const executeInfo = jest.spyOn(utils, "execute")
+const executeInfo = jest.spyOn(utils, "execute")
 // const renderQuestion = jest.spyOn(
 //   require("inquirer/lib/utils/screen-manager").prototype,
 //   "render"
 // )
 
-// afterEach(() => {
-//   executeInfo.mockReset()
-//   renderQuestion.mockReset()
-// })
+afterEach(() => {
+  executeInfo.mockReset()
+})
 
-describe("jheadx fake - test command generation", () => {
+describe("jheadx fake - jhead command generation", () => {
   test("dumpExifHeader", () =>
     expect(dumpExifHeader("./test/path")).toBe("jhead -exifmap ./test/path"))
   test("dumpFileDateName", () =>
@@ -36,13 +36,20 @@ describe("jheadx fake - test command generation", () => {
       "jhead -exifmap ./test/path | sort | tail -n +3 | head -3"
     ))
   test("setExifTime", () =>
-    expect(setExifTime(446248800000, "./test/path")).toBe(
+    expect(setExifTime(dayjs("1984:02:21-17:00:00"), "./test/path")).toBe(
       "jhead -q -ts1984:02:21-17:00:00 ./test/path"
     ))
   test("setFileTimeToExifTime", () =>
     expect(setFileTimeToExifTime("./test/path")).toBe(
       "jhead -q -ft ./test/path"
     ))
+  it("jheadx fake - snapshot test", async () => {
+    await runWithAnswers(() => fake(), [
+      "-d ./img/test -s 2014-01-24-14:30 -f 2014-01-24-18:00",
+      ENTER
+    ])
+    expect(executeInfo.mock.calls[0][0]).toMatchSnapshot()
+  })
 })
 
 // describe("fake", () => {

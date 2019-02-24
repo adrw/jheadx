@@ -3,8 +3,8 @@ import { execute, jheadTimeFormat, logger } from "../utils"
 const dayjs = require("dayjs")
 import * as fs from "fs-extra"
 
-export const command = "fake"
-export const desc = `Fake Timestamps`
+export const command = "fake -d -s -f"
+export const desc = `Fake timestamps on a linear distribution between start and finish times`
 
 const outputVerbosityControl = "-q"
 
@@ -30,12 +30,6 @@ export const setFileTimeToExifTime = (path: string) =>
 export const handler = async () => {
   try {
     var argv = yargs
-      .option("d", {
-        alias: "directory",
-        demandOption: true,
-        describe: "start time",
-        type: "string"
-      })
       .option("d", {
         alias: "directory",
         demandOption: true,
