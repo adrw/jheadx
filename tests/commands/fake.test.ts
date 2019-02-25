@@ -6,7 +6,7 @@ import {
   setExifTime
 } from "../../src/utils"
 
-describe("jheadx fake - jhead command generation", () => {
+describe("jheadx fake", () => {
   test("dumpExifHeader", () =>
     expect(dumpExifHeader("./test/path")).toBe("jhead -exifmap ./test/path"))
   test("dumpFileDateName", () =>

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jheadx matchmv run over real image files 1`] = `
+"[jheadx][[34mdebug[39m]
+Source Directory: ./img/smallTest
+[jheadx][[34mdebug[39m]
+Match Directory: ./img/test
+[jheadx][[34mdebug[39m]
+Rename Prefix: good
+[jheadx][[34mdebug[39m]
+srcFiles: 00006c.jpeg,00009c.jpeg
+[jheadx][[34mdebug[39m]
+matchFiles: 00006c.jpeg,00007c.jpeg,00008c.jpeg,00009c.jpeg
+[jheadx][[34mdebug[39m]
+matchFiles: 00007c.jpeg,00008c.jpeg,good00006c.jpeg,good00009c.jpeg
+[jheadx][[34mdebug[39m]
+Done. 🍺
+"
+`;

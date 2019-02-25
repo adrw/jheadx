@@ -1,54 +1,95 @@
+const compareImages = require("resemblejs/compareImages")
+import * as fs from "fs-extra"
 import * as yargs from "yargs"
 import { ls, logger } from "../utils"
-const dayjs = require("dayjs")
 
 export const command = "matchmv"
 export const desc = `-d -m -r : renamed with prefix matched files in match directory that also are found in source directory`
+
+export const imgDiff = async (
+  img1path: string,
+  img2path: string,
+  diffPath: string = null
+) => {
+  const data = await compareImages(
+    await fs.readFile(img1path),
+    await fs.readFile(img2path)
+  )
+
+  if (diffPath) {
+    await fs.writeFile(diffPath, data.getBuffer())
+  }
+
+  const { analysisTime, misMatchPercentage } = data
+  return { analysisTime, misMatchPercentage }
+}
+
+export const batchImgDiff = async (
+  directory: string,
+  matchDirectory: string
+) => {
+  // Initialize filesystem
+  const srcFiles = await ls(directory)
+  const matchFiles = await ls(matchDirectory)
+
+  // Files
+  logger.debug(`srcFiles: ${srcFiles}`)
+  logger.debug(`matchFiles: ${matchFiles}`)
+
+  // Loop over files, adding to map and renaming with prefix if file matches
+  let results: any[] = []
+  let sfMatched: any = {}
+  let mfMatched: any = {}
+  let srcPath = ""
+  let matchPath = ""
+  for (const mf of matchFiles) {
+    if (mfMatched[mf]) {
+      continue
+    }
+    matchPath = `${matchDirectory}/${mf}`
+    for (const sf of srcFiles) {
+      if (sfMatched[sf]) {
+        continue
+      }
+      srcPath = `${directory}/${sf}`
+      try {
+        let diffResult = await imgDiff(matchPath, srcPath)
+        if (diffResult.misMatchPercentage < 1.0) {
+          sfMatched[sf] = mf
+          mfMatched[mf] = sf
+          results.push({ mf, sf, diffResult })
+        }
+      } catch (e) {
+        logger.error(
+          `[ERROR] Processing image diff between ${matchPath} and ${srcPath}. ${e}`
+        )
+      }
+    }
+  }
+  return results
+}
 
 export const matchmv = async (
   directory: string,
   matchDirectory: string,
   renamePrefix: string
 ) => {
-  // Initialize filesystem
-  const srcFiles = await ls(directory)
-  const matchFiles = await ls(matchDirectory)
-
   // Debug Input Parameters
   logger.debug(`Source Directory: ${directory}`)
   logger.debug(`Match Directory: ${matchDirectory}`)
   logger.debug(`Rename Prefix: ${renamePrefix}`)
 
-  // Loop over files and update Exif and file timestamp to new time
-  logger.debug(srcFiles)
-  logger.debug(matchFiles)
-
-  // let path = ""
-  // for (let i = 0; i < files.length; i++) {
-  //   path = `${directory}/${files[i]}`
-  //   let oldFileDateName
-  //   if (env && env.toString().startsWith("CI")) {
-  //     oldFileDateName = execute(osAgnosticFileDateTime(path))
-  //   } else {
-  //     oldFileDateName = execute(dumpFileDateName(path))
-  //   }
-  //   while (
-  //     execute(setExifTime(start + i * increment, path)).includes(
-  //       "contains no Exif timestamp to change"
-  //     )
-  //   ) {
-  //     execute(makeExifSection(path))
-  //   }
-  //   execute(setFileTimeToExifTime(path))
-  //   let newExifTimeFileDateName
-  //   if (env && env.toString().startsWith("CI")) {
-  //     newExifTimeFileDateName = execute(osAgnosticFileDateTime(path))
-  //   } else {
-  //     newExifTimeFileDateName = execute(dumpExifTimeFileDateName(path))
-  //   }
-  //   logger.debug(`${oldFileDateName}=> \n${newExifTimeFileDateName}`)
-  // }
-  // logger.debug("Done. 🍺")
+  const results = await batchImgDiff(directory, matchDirectory)
+  for (const res of results) {
+    await fs.move(
+      `${matchDirectory}/${res.mf}`,
+      `${matchDirectory}/${renamePrefix}${res.mf}`
+    )
+  }
+  // Results
+  const matchFiles = await ls(matchDirectory)
+  logger.debug(`matchFiles: ${matchFiles}`)
+  logger.debug("Done. 🍺")
 }
 
 export const handler = async () => {

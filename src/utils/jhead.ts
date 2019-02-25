@@ -3,6 +3,9 @@ import { jheadTimeFormat } from "../utils"
 
 export const dumpExifHeader = (path: string) => `jhead -exifmap ${path}`
 
+export const dumpExifMap = (path: string) =>
+  `${dumpExifHeader(path)} | grep Map`
+
 export const osAgnosticFileDateTime = (path: string) =>
   `${dumpExifHeader(path)} | grep -v Map`
 

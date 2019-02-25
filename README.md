@@ -15,8 +15,10 @@
     - `[photo-00001.png,photo-00002.png,photo-00005.png,photo-00008.png,photo-00009.png,photo-00010.png,photo-00014.png,photo-00016.png,photo-00023.png,photo-00027.png]`
   - Example Usage: `$ jheadx fake -d ./img/test -s 2014-01-24-14:30 -f 2014-01-24-18:00`
 - `$ jhead matchmv -d {sourceDir} -m {matchDir} -p {renamePrefix}`: jhead**x** **m**atches files from source directory to the match directory and renames the matched files in the match directory with the `renamePrefix`.
-  - It builds hash map of the exif map from each file and if there is a match, the matching file is renamed.
-- `$ jheadx restore -d {sourceDir} -r {restoreDir}`: jhead**x** **r**estores EXIF from files in the source directory to any matching filenames on the restore directory
+  - It makes most sense to have the match directory be a superset of the source directory.
+  - Image files are compared using [`Resemble.js`](https://github.com/rsmbl/Resemble.js).
+  - Note, the matching algorithm between the directories is still `O(n^2)` so it will really chug on large directories.
+- **Coming soon** `$ jheadx restore -d {sourceDir} -r {restoreDir}`: jhead**x** **r**estores EXIF from files in the source directory to any matching filenames on the restore directory
 
 # Wrapper
 
