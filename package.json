@@ -48,7 +48,7 @@
     "prepare": "npm run-script build && npm run-script test",
     "smooth-release": "smooth-release",
     "precommit": "npm run-script lint",
-    "reset": "rm -rf img/test && cd img && unzip original.zip && rm -rf __MACOSX && mv original test"
+    "reset": "rm -rf img/test img/comp && cd img && unzip original.zip && rm -rf __MACOSX && cp -r original test && mv original comp && rm comp/*[1-5]*"
   },
   "prettier": {
     "arrowParens": "avoid",
