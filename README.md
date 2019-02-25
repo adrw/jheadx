@@ -1,6 +1,6 @@
 # jheadx
 
-[![Build Status](https://travis-ci.com/adrw/jheadx.svg?branch=master)](https://travis-ci.com/adrw/jheadx)
+[![Build Status](https://travis-ci.com/adrw/jheadx.svg?branch=master)](https://travis-ci.com/adrw/jheadx) [![npm](https://img.shields.io/npm/v/jheadx.svg?label=jheadx)](https://www.npmjs.com/package/jheadx)
 
 `$ jhead` wrapper with extended functionality to batch fix photos lacking EXIF data
 
