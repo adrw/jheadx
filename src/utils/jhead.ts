@@ -4,7 +4,7 @@ import { jheadTimeFormat, logger } from "../utils"
 
 export const installJheadWarning = () => {
   logger.error(
-    "No local jhead installation found \n Linux: sudo apt-get update && sudo apt-get install -y jhead \n Mac: brew install jhead"
+    "No local jhead installation found. Try installing with the commands below.\n\tLinux: sudo apt-get update && sudo apt-get install -y jhead\n\tMac: brew install jhead"
   )
 }
 

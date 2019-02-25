@@ -31,15 +31,14 @@ export const execute = (cmd: string) => {
     const result = execSync(cmd, { stdio: "pipe", encoding: "utf-8" })
     return result
   } catch (e) {
-    logger.info(e.stdout)
-    logger.info(e.stderr)
+    return e
   }
 }
 
 export const handleFail = (): void => {
-  logger.info(yargs.help().version())
+  logger.warn(yargs.help().version())
   const cmd = jheadCmdFromArgs()
-  logger.info(`Now running: $ ${cmd}`)
+  logger.warn(`Now running: $ ${cmd}`)
   execute(cmd)
 }
 
