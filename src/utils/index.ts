@@ -1,4 +1,5 @@
 import { execSync } from "child_process"
+import * as fs from "fs-extra"
 import yargs = require("yargs")
 import * as winston from "winston"
 
@@ -40,4 +41,18 @@ export const handleFail = (): void => {
   const cmd = jheadCmdFromArgs()
   logger.info(`Now running: $ ${cmd}`)
   execute(cmd)
+}
+
+export const ls = async (directory: string) => {
+  let files
+  try {
+    files = await fs
+      .readdir(directory)
+      .then(files => files.filter(file => !file.endsWith("DS_Store")))
+  } catch (e) {
+    logger.error(
+      `[ERROR] Failed to list files in directory: ${directory}. ${e}`
+    )
+  }
+  return files
 }

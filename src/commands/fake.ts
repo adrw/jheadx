@@ -7,6 +7,7 @@ import {
   osAgnosticFileDateTime,
   dumpExifTimeFileDateName,
   dumpFileDateName,
+  ls,
   makeExifSection,
   setExifTime,
   setFileTimeToExifTime
@@ -16,13 +17,6 @@ export const command = "fake"
 export const desc = `-d -s -f : generate fake EXIF  and file atimestamps on a linear distribution between start and finish times`
 
 const env = execute("printenv env")
-const outputVerbosityControl = "-q"
-
-export const ls = async (directory: string) => {
-  return fs
-    .readdir(directory)
-    .then(files => files.filter(file => !file.endsWith("DS_Store")))
-}
 
 export const fake = async (
   directory: string,
@@ -94,7 +88,6 @@ export const handler = async () => {
         describe: "finish time",
         type: "string"
       }).argv
-
     fake(argv.d, argv.s, argv.f)
   } catch (e) {
     logger.error("[ERROR]", e)
