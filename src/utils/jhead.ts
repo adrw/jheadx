@@ -1,5 +1,21 @@
+import { execSync } from "child_process"
 const dayjs = require("dayjs")
-import { jheadTimeFormat } from "../utils"
+import { jheadTimeFormat, logger } from "../utils"
+
+export const installJheadWarning = () => {
+  logger.error(
+    "No local jhead installation found \n Linux: sudo apt-get update && sudo apt-get install -y jhead \n Mac: brew install jhead"
+  )
+}
+
+export const jhead = (cmd: string) => {
+  try {
+    const result = execSync(cmd, { stdio: "pipe", encoding: "utf-8" })
+    return result
+  } catch (e) {
+    installJheadWarning()
+  }
+}
 
 export const dumpExifHeader = (path: string) => `jhead -exifmap ${path}`
 

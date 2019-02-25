@@ -1,8 +1,8 @@
 const dayjs = require("dayjs")
-import * as fs from "fs-extra"
 import * as yargs from "yargs"
 import {
   execute,
+  jhead,
   logger,
   osAgnosticFileDateTime,
   dumpExifTimeFileDateName,
@@ -44,23 +44,23 @@ export const fake = async (
     path = `${directory}/${files[i]}`
     let oldFileDateName
     if (env && env.toString().startsWith("CI")) {
-      oldFileDateName = execute(osAgnosticFileDateTime(path))
+      oldFileDateName = jhead(osAgnosticFileDateTime(path))
     } else {
-      oldFileDateName = execute(dumpFileDateName(path))
+      oldFileDateName = jhead(dumpFileDateName(path))
     }
     while (
-      execute(setExifTime(start + i * increment, path)).includes(
+      jhead(setExifTime(start + i * increment, path)).includes(
         "contains no Exif timestamp to change"
       )
     ) {
-      execute(makeExifSection(path))
+      jhead(makeExifSection(path))
     }
-    execute(setFileTimeToExifTime(path))
+    jhead(setFileTimeToExifTime(path))
     let newExifTimeFileDateName
     if (env && env.toString().startsWith("CI")) {
-      newExifTimeFileDateName = execute(osAgnosticFileDateTime(path))
+      newExifTimeFileDateName = jhead(osAgnosticFileDateTime(path))
     } else {
-      newExifTimeFileDateName = execute(dumpExifTimeFileDateName(path))
+      newExifTimeFileDateName = jhead(dumpExifTimeFileDateName(path))
     }
     logger.debug(`${oldFileDateName}=> \n${newExifTimeFileDateName}`)
   }
