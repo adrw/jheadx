@@ -31,15 +31,19 @@ export const setExifTime = (newTime: number, path: string) =>
 export const setFileTimeToExifTime = (path: string) =>
   `jhead ${outputVerbosityControl} -ft ${path}`
 
+export const ls = async (directory: string) => {
+  return fs
+    .readdir(directory)
+    .then(files => files.filter(file => !file.endsWith("DS_Store")))
+}
+
 export const fake = async (
   directory: string,
   startString: string,
   finishString: string
 ) => {
   // Initialize filesystem
-  const files = await fs
-    .readdir(directory)
-    .then(files => files.filter(file => !file.endsWith("DS_Store")))
+  const files = await ls(directory)
 
   // Calculate date range and step size
   const start = dayjs(startString)
