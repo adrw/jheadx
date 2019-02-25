@@ -1,22 +1,35 @@
+import * as yargs from "yargs"
+import { execute, jheadTimeFormat, logger } from "../utils"
 const dayjs = require("dayjs")
 import * as fs from "fs-extra"
-import * as yargs from "yargs"
-import {
-  execute,
-  logger,
-  osAgnosticFileDateTime,
-  dumpExifTimeFileDateName,
-  dumpFileDateName,
-  makeExifSection,
-  setExifTime,
-  setFileTimeToExifTime
-} from "../utils"
 
-export const command = "fake"
-export const desc = `-d -s -f : generate fake EXIF  and file atimestamps on a linear distribution between start and finish times`
+export const command = "match"
+export const desc = `-d -m : generate fake EXIF  and file atimestamps on a linear distribution between start and finish times`
 
 const env = execute("printenv env")
 const outputVerbosityControl = "-q"
+
+export const dumpExifHeader = (path: string) => `jhead -exifmap ${path}`
+
+export const osAgnosticFileDateTime = (path: string) =>
+  `${dumpExifHeader(path)} | grep -v Map`
+
+export const dumpFileDateName = (path: string) =>
+  `${dumpExifHeader(path)} | sort | tail -n +3 | head -2`
+
+export const dumpExifTimeFileDateName = (path: string) =>
+  `${dumpExifHeader(path)} | sort | tail -n +3 | head -3`
+
+export const makeExifSection = (path: string) =>
+  `jhead ${outputVerbosityControl} -mkexif ${path}`
+
+export const setExifTime = (newTime: number, path: string) =>
+  `jhead ${outputVerbosityControl} -ts${dayjs(newTime).format(
+    jheadTimeFormat
+  )} ${path}`
+
+export const setFileTimeToExifTime = (path: string) =>
+  `jhead ${outputVerbosityControl} -ft ${path}`
 
 export const ls = async (directory: string) => {
   return fs
@@ -24,7 +37,7 @@ export const ls = async (directory: string) => {
     .then(files => files.filter(file => !file.endsWith("DS_Store")))
 }
 
-export const fake = async (
+export const matchmv = async (
   directory: string,
   startString: string,
   finishString: string
@@ -95,7 +108,7 @@ export const handler = async () => {
         type: "string"
       }).argv
 
-    fake(argv.d, argv.s, argv.f)
+    matchmv(argv.d, argv.s, argv.f)
   } catch (e) {
     logger.error("[ERROR]", e)
   }

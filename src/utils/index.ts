@@ -2,6 +2,7 @@ import { execSync } from "child_process"
 import yargs = require("yargs")
 import * as winston from "winston"
 
+export * from "./jhead"
 export const dateFormat = "YYYY-MM-DD HH:mm:ss:SSS"
 export const jheadTimeFormat = "YYYY:MM:DD-HH:mm:ss"
 export const jheadDateFormat = "YYYY:MM:DD"

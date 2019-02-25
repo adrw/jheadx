@@ -4,8 +4,7 @@ import {
   dumpFileDateName,
   dumpExifTimeFileDateName,
   setExifTime
-} from "../../src/commands/fake"
-import { execute } from "../../src/utils"
+} from "../../src/utils"
 
 describe("jheadx fake - jhead command generation", () => {
   test("dumpExifHeader", () =>
