@@ -29,7 +29,7 @@ export const fake = async (
   const start = dayjs(startString)
   const finish = dayjs(finishString)
   const difference = finish.diff(start)
-  const increment = difference / files.length
+  const increment = Math.round(difference / files.length)
 
   // Debug Input Parameters
   logger.debug(`Directory: ${directory}`)
