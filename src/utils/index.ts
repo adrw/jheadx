@@ -35,12 +35,18 @@ export const execute = (cmd: string) => {
   }
 }
 
-export const ls = async (directory: string) => {
+export const lsJpeg = async (directory: string) => {
   let files
   try {
     files = await fs
       .readdir(directory)
-      .then(files => files.filter(file => !file.endsWith("DS_Store")))
+      .then(files =>
+        files.filter(
+          file =>
+            !file.endsWith("DS_Store") &&
+            (file.endsWith(".jpg") || file.endsWith(".jpeg"))
+        )
+      )
   } catch (e) {
     logger.error(
       `[ERROR] Failed to list files in directory: ${directory}. ${e}`

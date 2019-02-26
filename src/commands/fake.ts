@@ -8,7 +8,7 @@ import {
   osAgnosticFileDateTime,
   dumpExifTimeFileDateName,
   dumpFileDateName,
-  ls,
+  lsJpeg,
   makeExifSection,
   setExifTime,
   setFileTimeToExifTime
@@ -23,7 +23,7 @@ export const fake = async (
   finishString: string
 ) => {
   // Initialize filesystem
-  const files = await ls(directory)
+  const files = await lsJpeg(directory)
 
   // Calculate date range and step size
   const start = dayjs(startString)

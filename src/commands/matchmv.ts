@@ -2,7 +2,7 @@ const compareImages = require("resemblejs/compareImages")
 import * as fs from "fs-extra"
 const ProgressBar = require("progress")
 import * as yargs from "yargs"
-import { ls, logger } from "../utils"
+import { lsJpeg, logger } from "../utils"
 
 export const command = "matchmv"
 export const desc = `-d -m -r : renamed with prefix matched files in match directory that also are found in source directory`
@@ -30,8 +30,8 @@ export const batchImgDiff = async (
   matchDirectory: string
 ) => {
   // Initialize filesystem
-  const srcFiles = await ls(directory)
-  const matchFiles = await ls(matchDirectory)
+  const srcFiles = await lsJpeg(directory)
+  const matchFiles = await lsJpeg(matchDirectory)
 
   // Files
   logger.debug(`srcFiles: ${srcFiles}`)
@@ -96,7 +96,7 @@ export const matchmv = async (
     )
   }
   // Results
-  const matchFiles = await ls(matchDirectory)
+  const matchFiles = await lsJpeg(matchDirectory)
   logger.debug(`matchFiles: ${matchFiles}`)
   logger.debug("Done. 🍺")
 }
