@@ -29,6 +29,12 @@
 alias jhead=jheadx
 ```
 
+# Required
+
+- `jheadx` does not come with `jhead` as part of the CLI. `jhead` is a peer dependency that must be installed separately. Find install instructions [here](http://www.sentex.net/~mwandel/jhead/) or below:
+  - Linux: `sudo apt-get update && sudo apt-get install -y jhead`
+  - macOS: `brew install jhead`
+
 # Resources
 
 - [jhead](http://www.sentex.net/~mwandel/jhead/): "Exif Jpeg header manipulation tool" by Matthias Wandel

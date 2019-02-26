@@ -28,7 +28,7 @@ describe("jheadx fake", () => {
     await execute("npm run-script reset")
     expect(
       jhead(
-        "export env=TEST && node dist/index.js fake -d ./img/test -s 2014-01-24-14:30 -f 2014-01-24-18:00 && unset env"
+        "export env=TEST && node dist/index.js fake -d ./img/smallTest -s 2014-01-24-14:30 -f 2014-01-24-18:00 && unset env"
       )
     ).toContain("16:15:00")
   })
