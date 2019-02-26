@@ -1,6 +1,6 @@
 {
   "name": "jheadx",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "`jhead` wrapper with extended functionality to batch fix photos lacking EXIF data",
   "licence": "GPL-3.0",
   "main": "index.js",
