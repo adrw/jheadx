@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/adrw/jheadx.svg?branch=master)](https://travis-ci.com/adrw/jheadx) [![npm](https://img.shields.io/npm/v/jheadx.svg?label=jheadx)](https://www.npmjs.com/package/jheadx)
 
-`$ jhead` wrapper with extended functionality to batch fix photos lacking EXIF data
+`$ jhead` extended to handle complex batch photo and EXIF data manipulation
 
 # New Commands
 
@@ -19,15 +19,6 @@
   - Image files are compared using [`Resemble.js`](https://github.com/rsmbl/Resemble.js).
   - Note, the matching algorithm between the directories is still `O(n^2)` so it will really chug on large directories.
 - **Coming soon** `$ jheadx restore -d {sourceDir} -r {restoreDir}`: jhead**x** **r**estores EXIF from files in the source directory to any matching filenames on the restore directory
-
-# Wrapper
-
-- If a command doesn't match the above new commands, it is executed as a pure `jhead` command. Thus, `jheadx` is a wrapper with additional functionality.
-- You can thus alias over `jheadx` as `jhead` with the following in your `.aliases` or equivalent file
-
-```
-alias jhead=jheadx
-```
 
 # Required
 

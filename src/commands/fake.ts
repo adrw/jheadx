@@ -17,8 +17,6 @@ import {
 export const command = "fake"
 export const desc = `-d -s -f : generate fake EXIF  and file atimestamps on a linear distribution between start and finish times`
 
-const env = execute("printenv env")
-
 export const fake = async (
   directory: string,
   startString: string,
@@ -39,6 +37,7 @@ export const fake = async (
   logger.debug(`Finish Time: ${finish.format()}`)
   logger.debug(`Increment (ms): ${increment}`)
 
+  const env = execute("printenv env")
   // Loop over files and update Exif and file timestamp to new time
   const bar = new ProgressBar("fake [:bar]", {
     complete: "=",

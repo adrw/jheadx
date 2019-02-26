@@ -35,13 +35,6 @@ export const execute = (cmd: string) => {
   }
 }
 
-export const handleFail = (): void => {
-  logger.warn(yargs.help().version())
-  const cmd = jheadCmdFromArgs()
-  logger.warn(`Now running: $ ${cmd}`)
-  execute(cmd)
-}
-
 export const ls = async (directory: string) => {
   let files
   try {
