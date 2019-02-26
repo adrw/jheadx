@@ -21,6 +21,7 @@
     "fs-extra": "^7.0.1",
     "inquirer": "^6.2.2",
     "klaw": "^3.0.0",
+    "progress": "^2.0.3",
     "resemblejs": "^3.0.2",
     "winston": "^3.2.1",
     "yargs": "^13.1.0"

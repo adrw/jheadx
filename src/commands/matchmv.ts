@@ -1,5 +1,6 @@
 const compareImages = require("resemblejs/compareImages")
 import * as fs from "fs-extra"
+const ProgressBar = require("progress")
 import * as yargs from "yargs"
 import { ls, logger } from "../utils"
 
@@ -42,12 +43,20 @@ export const batchImgDiff = async (
   let mfMatched: any = {}
   let srcPath = ""
   let matchPath = ""
+  const bar = new ProgressBar("matchmv [:bar]", {
+    complete: "=",
+    incomplete: " ",
+    width: 70,
+    total: matchFiles.length * srcFiles.length
+  })
   for (const mf of matchFiles) {
+    bar.tick(1)
     if (mfMatched[mf]) {
       continue
     }
     matchPath = `${matchDirectory}/${mf}`
     for (const sf of srcFiles) {
+      bar.tick(1)
       if (sfMatched[sf]) {
         continue
       }

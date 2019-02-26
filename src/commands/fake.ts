@@ -1,4 +1,5 @@
 const dayjs = require("dayjs")
+const ProgressBar = require("progress")
 import * as yargs from "yargs"
 import {
   execute,
@@ -36,14 +37,21 @@ export const fake = async (
   logger.debug(`Directory: ${directory}`)
   logger.debug(`Start Time: ${start.format()}`)
   logger.debug(`Finish Time: ${finish.format()}`)
-  logger.debug(`Increment: ${increment}`)
+  logger.debug(`Increment (ms): ${increment}`)
 
   // Loop over files and update Exif and file timestamp to new time
+  const bar = new ProgressBar("fake [:bar]", {
+    complete: "=",
+    incomplete: " ",
+    width: 70,
+    total: files.length
+  })
   let path = ""
   for (let i = 0; i < files.length; i++) {
+    bar.tick(1)
     path = `${directory}/${files[i]}`
     let oldFileDateName
-    if (env && env.toString().startsWith("CI")) {
+    if (env && env.toString().startsWith("TEST")) {
       oldFileDateName = jhead(osAgnosticFileDateTime(path))
     } else {
       oldFileDateName = jhead(dumpFileDateName(path))
@@ -57,12 +65,13 @@ export const fake = async (
     }
     jhead(setFileTimeToExifTime(path))
     let newExifTimeFileDateName
-    if (env && env.toString().startsWith("CI")) {
+    if (env && env.toString().startsWith("TEST")) {
       newExifTimeFileDateName = jhead(osAgnosticFileDateTime(path))
+      logger.debug(`${oldFileDateName}=> \n${newExifTimeFileDateName}`)
     } else {
+      // TODO add option to log this if in verbose mode and hide the progress bar
       newExifTimeFileDateName = jhead(dumpExifTimeFileDateName(path))
     }
-    logger.debug(`${oldFileDateName}=> \n${newExifTimeFileDateName}`)
   }
   logger.debug("Done. 🍺")
 }
