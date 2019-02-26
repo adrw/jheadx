@@ -45,12 +45,12 @@
     "start": "node dist/index.js",
     "watch": "tsc -w",
     "build": "tsc",
-    "test": "jest",
+    "test": "npm run-script reset && jest",
     "lint": "prettier --write --config package.json \".{/src/**/,/}*.{md,css,sass,less,json,js,jsx,ts,tsx}\"",
     "prepare": "npm run-script build && npm run-script test",
     "smooth-release": "smooth-release",
     "precommit": "npm run-script lint",
-    "reset": "rm -rf img/match img/smallTest img/test && cd img && unzip original.zip && rm -rf __MACOSX && cp -r original match && mv original test && rm test/*[1-5]* && cp -r test smallTest && rm smallTest/*[7-8]*"
+    "reset": "rm -rf img/match img/smallTest1 img/test && cd img && unzip original.zip && rm -rf __MACOSX && cp -r original match && mv original test && rm test/*[1-5]* && cp -r test smallTest1 && rm smallTest1/*[7-8]* && cp -r smallTest1 smallTest2"
   },
   "prettier": {
     "arrowParens": "avoid",

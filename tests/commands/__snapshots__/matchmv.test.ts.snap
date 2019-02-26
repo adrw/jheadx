@@ -2,7 +2,7 @@
 
 exports[`jheadx matchmv run over real image files 1`] = `
 "[jheadx][[34mdebug[39m]
-Source Directory: ./img/smallTest
+Source Directory: ./img/smallTest1
 [jheadx][[34mdebug[39m]
 Match Directory: ./img/test
 [jheadx][[34mdebug[39m]

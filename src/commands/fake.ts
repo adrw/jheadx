@@ -36,6 +36,7 @@ export const fake = async (
   logger.debug(`Start Time: ${start.format()}`)
   logger.debug(`Finish Time: ${finish.format()}`)
   logger.debug(`Increment (ms): ${increment}`)
+  logger.debug(`Files: ${lsJpeg(directory)}`)
 
   const env = execute("printenv env")
   // Loop over files and update Exif and file timestamp to new time
@@ -46,30 +47,39 @@ export const fake = async (
     total: files.length
   })
   let path = ""
+  let timestamp = 0
+  let abandoned = []
   for (let i = 0; i < files.length; i++) {
     bar.tick(1)
     path = `${directory}/${files[i]}`
-    let oldFileDateName
-    if (env && env.toString().startsWith("TEST")) {
-      oldFileDateName = jhead(osAgnosticFileDateTime(path))
-    } else {
-      oldFileDateName = jhead(dumpFileDateName(path))
-    }
-    while (
-      jhead(setExifTime(start + i * increment, path)).includes(
-        "contains no Exif timestamp to change"
+    timestamp = start + i * increment
+    try {
+      let oldFileDateName
+      if (env && env.toString().startsWith("TEST")) {
+        oldFileDateName = jhead(osAgnosticFileDateTime(path))
+      } else {
+        oldFileDateName = jhead(dumpFileDateName(path))
+      }
+      const setResult = await jhead(setExifTime(timestamp, path))
+      if (setResult.includes("contains no Exif timestamp to change")) {
+        await jhead(makeExifSection(path))
+        await jhead(setExifTime(timestamp, path))
+      }
+      jhead(setFileTimeToExifTime(path))
+      let newExifTimeFileDateName
+      if (env && env.toString().startsWith("TEST")) {
+        newExifTimeFileDateName = jhead(osAgnosticFileDateTime(path))
+        logger.debug(`${oldFileDateName}=> \n${newExifTimeFileDateName}`)
+      } else {
+        // TODO add option to log this if in verbose mode and hide the progress bar
+        newExifTimeFileDateName = jhead(dumpExifTimeFileDateName(path))
+      }
+    } catch (e) {
+      abandoned.push({ path })
+      logger.error(
+        `Fatal error when running fake command on ${path} with timestamp ${timestamp}.`,
+        e
       )
-    ) {
-      jhead(makeExifSection(path))
-    }
-    jhead(setFileTimeToExifTime(path))
-    let newExifTimeFileDateName
-    if (env && env.toString().startsWith("TEST")) {
-      newExifTimeFileDateName = jhead(osAgnosticFileDateTime(path))
-      logger.debug(`${oldFileDateName}=> \n${newExifTimeFileDateName}`)
-    } else {
-      // TODO add option to log this if in verbose mode and hide the progress bar
-      newExifTimeFileDateName = jhead(dumpExifTimeFileDateName(path))
     }
   }
   logger.debug("Done. 🍺")

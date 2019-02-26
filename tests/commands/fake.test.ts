@@ -25,10 +25,9 @@ describe("jheadx fake", () => {
     ))
   // Flaky test on different OS / platforms
   test("run over real image files", async () => {
-    await execute("npm run-script reset")
     expect(
       jhead(
-        "export env=TEST && node dist/index.js fake -d ./img/smallTest -s 2014-01-24-14:30 -f 2014-01-24-18:00 && unset env"
+        "export env=TEST && node dist/index.js fake -d ./img/smallTest2 -s 2014-01-24-14:30 -f 2014-01-24-18:00 && unset env"
       )
     ).toContain("16:15:00")
   })
