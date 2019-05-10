@@ -1,4 +1,4 @@
-import { execSync } from "child_process"
+import { cd, exec } from "shelljs"
 import * as fs from "fs-extra"
 import yargs = require("yargs")
 import * as winston from "winston"
@@ -26,12 +26,17 @@ export const jheadCmdFromArgs = () => {
   return args.join(" ")
 }
 
-export const execute = (cmd: string) => {
-  try {
-    const result = execSync(cmd, { stdio: "pipe", encoding: "utf-8" })
-    return result
-  } catch (e) {
-    return e
+export const execute = async (cmd: string, ...args: any) => {
+  const dir = args[0]
+  if (dir) cd(dir)
+  const terminal = exec(cmd)
+  terminal.stdout
+  if (terminal.code) {
+    throw new Error(
+      `Shell command \`${cmd}\` exited with code ${terminal.code}. ${
+        terminal.stderr
+      }`
+    )
   }
 }
 
