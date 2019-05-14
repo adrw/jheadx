@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@misk/tslint": "^0.1.4",
-    "@types/fs-extra": "^5.0.5",
+    "@types/fs-extra": "^7.0.0",
     "@types/inquirer": "6.0.0",
     "@types/jest": "^24.0.6",
     "@types/klaw": "^3.0.0",
