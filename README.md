@@ -1,6 +1,6 @@
 # jheadx
 
-[![CircleCI](https://circleci.com/gh/adrw/jheadx.svg?style=svg)](https://circleci.com/gh/adrw/jheadx) [![npm](https://img.shields.io/npm/v/jheadx.svg?label=jheadx)](https://www.npmjs.com/package/jheadx) [![Greenkeeper badge](https://badges.greenkeeper.io/adrw/jheadx.svg)](https://greenkeeper.io/)
+[![CircleCI](https://circleci.com/gh/adrw/jheadx.svg?style=svg)](https://circleci.com/gh/adrw/jheadx) [![npm](https://img.shields.io/npm/v/jheadx.svg?label=jheadx)](https://www.npmjs.com/package/jheadx)
 
 `$ jhead` extended to handle complex batch photo and EXIF data manipulation
 
