@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/jheadx
+    docker:
+      - image: circleci/node:10.15
+    steps:
+      - checkout
+      - run:
+          name: Installing jhead...
+          command: sudo apt-get update && sudo apt-get install -y jhead
+      - run:
+          name: Installing...
+          command: npm install
+      - run:
+          name: Building...
+          command: npm run build
+      - run:
+          name: Testing...
+          command: npm run test
