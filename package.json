@@ -40,7 +40,7 @@
     "jest": "24.8.0",
     "tslib": "1.9.3",
     "ts-jest": "24.0.2",
-    "typescript": "3.3.3333"
+    "typescript": "3.5.1"
   },
   "preferGlobal": true,
   "scripts": {
