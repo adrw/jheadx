@@ -28,7 +28,7 @@
     "yargs": "^13.1.0"
   },
   "devDependencies": {
-    "@misk/tslint": "0.1.14",
+    "@misk/tslint": "0.1.15",
     "@types/fs-extra": "8.0.0",
     "@types/inquirer": "6.0.3",
     "@types/jest": "24.0.15",
