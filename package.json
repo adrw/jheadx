@@ -31,7 +31,7 @@
     "@misk/tslint": "0.1.24",
     "@types/fs-extra": "8.0.1",
     "@types/inquirer": "6.5.0",
-    "@types/jest": "25.1.1",
+    "@types/jest": "25.1.2",
     "@types/klaw": "3.0.0",
     "@types/node": "11.9.5",
     "@types/shelljs": "0.8.6",
