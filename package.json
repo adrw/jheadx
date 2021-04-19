@@ -17,7 +17,7 @@
     "yarn": "YARN NO LONGER USED - use npm instead."
   },
   "dependencies": {
-    "dayjs": "^1.8.7",
+    "dayjs": "^1.10.4",
     "fs-extra": "^9.0.0",
     "inquirer": "^8.0.0",
     "klaw": "^3.0.0",
