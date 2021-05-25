@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/jheadx
     docker:
-      - image: circleci/node:10.24
+      - image: circleci/node:15.14
     steps:
       - checkout
       - run:
