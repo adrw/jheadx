@@ -35,7 +35,7 @@
     "@types/klaw": "3.0.2",
     "@types/node": "14.17.5",
     "@types/shelljs": "0.8.9",
-    "@types/yargs": "16.0.4",
+    "@types/yargs": "17.0.2",
     "bdd-stdin": "0.2.0",
     "jest": "27.0.6",
     "tslib": "2.3.0",
