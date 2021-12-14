@@ -37,7 +37,7 @@
     "@types/shelljs": "0.8.9",
     "@types/yargs": "16.0.4",
     "bdd-stdin": "0.2.0",
-    "jest": "27.4.4",
+    "jest": "27.4.5",
     "tslib": "2.3.1",
     "ts-jest": "27.1.1",
     "typescript": "4.5.3"
