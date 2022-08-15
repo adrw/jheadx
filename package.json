@@ -30,7 +30,7 @@
   "devDependencies": {
     "@misk/tslint": "0.4.0",
     "@types/fs-extra": "9.0.13",
-    "@types/inquirer": "9.0.0",
+    "@types/inquirer": "9.0.1",
     "@types/jest": "27.5.2",
     "@types/klaw": "3.0.3",
     "@types/node": "16.11.48",
