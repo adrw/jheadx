@@ -22,7 +22,7 @@
     "inquirer": "^9.0.0",
     "klaw": "^4.0.0",
     "progress": "^2.0.3",
-    "resemblejs": "^4.0.0",
+    "resemblejs": "^5.0.0",
     "shelljs": "0.8.5",
     "winston": "^3.2.1",
     "yargs": "^17.0.0"
