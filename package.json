@@ -33,7 +33,7 @@
     "@types/inquirer": "9.0.7",
     "@types/jest": "29.5.12",
     "@types/klaw": "3.0.6",
-    "@types/node": "20.14.7",
+    "@types/node": "20.14.8",
     "@types/shelljs": "0.8.15",
     "@types/yargs": "16.0.9",
     "bdd-stdin": "0.2.0",
